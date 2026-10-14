@@ -1,0 +1,74 @@
+(() => {
+	const styles = [
+		{ title: "Editorial", family: "'Playfair Display', Georgia, serif", weight: 700, color: "#ffc98b", label: "Elegant serif" },
+		{ title: "Modern", family: "'DM Sans', Arial, sans-serif", weight: 800, color: "#a8a4ff", label: "Clean & confident" },
+		{ title: "Creative", family: "'Space Grotesk', Arial, sans-serif", weight: 700, color: "#ff91aa", label: "Fresh geometric" },
+		{ title: "Minimal", family: "'Manrope', Arial, sans-serif", weight: 500, color: "#79dfc1", label: "Soft minimal" },
+		{ title: "Statement", family: "'Bebas Neue', Impact, sans-serif", weight: 400, color: "#ffd16f", label: "Big & bold" },
+		{ title: "Code Chic", family: "'Space Mono', monospace", weight: 700, color: "#c5a0ff", label: "Retro mono" }
+	];
+
+	function buildShowcase() {
+		if (!document.body || document.getElementById("font-variation-showcase")) return;
+
+		const googleFonts = document.createElement("link");
+		googleFonts.rel = "stylesheet";
+		googleFonts.href = "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;800&family=Manrope:wght@300;500;700&family=Playfair+Display:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap";
+		document.head.appendChild(googleFonts);
+
+		const css = document.createElement("style");
+		css.textContent = `
+			#font-variation-showcase{min-height:100vh;padding:clamp(28px,7vw,76px);background:radial-gradient(ellipse at 12% 0%,#30234b 0,transparent 42%),#121119;color:#f8f5ff;font-family:Arial,sans-serif}
+			#font-variation-showcase *{box-sizing:border-box}
+			#font-variation-showcase .intro,#font-variation-showcase .font-grid{max-width:920px;margin-left:auto;margin-right:auto}
+			#font-variation-showcase .eyebrow{margin:0 0 14px;color:#c3adff;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+			#font-variation-showcase h1{margin:0;font-size:clamp(42px,8vw,78px);letter-spacing:-.065em;line-height:.98}
+			#font-variation-showcase .description{max-width:560px;margin:18px 0 30px;color:#b1abba;font-size:16px;line-height:1.65}
+			#font-variation-showcase .preview-label{display:block;margin-bottom:9px;color:#d0cad9;font-size:13px}
+			#font-variation-showcase #font-preview{width:min(100%,390px);padding:12px 14px;border:1px solid #40394d;border-radius:10px;background:#1d1a25;color:#fff;font:inherit;outline:none}
+			#font-variation-showcase #font-preview:focus{border-color:#b29cff;box-shadow:0 0 0 3px #b29cff25}
+			#font-variation-showcase .font-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,265px),1fr));gap:16px;margin-top:22px}
+			#font-variation-showcase .font-card{padding:22px;border:1px solid #342f3e;border-radius:16px;background:linear-gradient(145deg,#211e29,#19171f);transition:transform .2s,border-color .2s}
+			#font-variation-showcase .font-card:hover{transform:translateY(-4px);border-color:#74658f}
+			#font-variation-showcase .card-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}
+			#font-variation-showcase h2{margin:0;font-size:14px}
+			#font-variation-showcase .tag{padding:6px 9px;border:1px solid #40394b;border-radius:20px;color:#bcb5c8;font-size:10px;white-space:nowrap}
+			#font-variation-showcase .sample{display:flex;align-items:center;min-height:94px;margin:8px 0 16px;overflow-wrap:anywhere;font-size:clamp(36px,5vw,49px);letter-spacing:-.045em;line-height:1.08}
+			#font-variation-showcase .weights{display:flex;flex-wrap:wrap;gap:7px}
+			#font-variation-showcase .weight{padding:7px 9px;border-radius:7px;background:#2c2835;color:#d1cbd9;font-size:11px}
+			@media(max-width:520px){#font-variation-showcase{padding:38px 20px}#font-variation-showcase .font-card{padding:19px}}
+		`;
+		document.head.appendChild(css);
+
+		const showcase = document.createElement("main");
+		showcase.id = "font-variation-showcase";
+		showcase.innerHTML = `
+			<header class="intro">
+				<p class="eyebrow">A curated type collection</p>
+				<h1>Find your<br>type of beautiful.</h1>
+				<p class="description">Explore expressive font styles and weight variations. Try your own words and find the perfect look for your next design.</p>
+				<label class="preview-label" for="font-preview">Preview text</label>
+				<input id="font-preview" type="text" maxlength="40" placeholder="Type something…" aria-label="Preview text">
+			</header>
+			<section class="font-grid" aria-label="Font styles">
+				${styles.map((style, index) => `
+					<article class="font-card">
+						<div class="card-heading"><h2>${style.title}</h2><span class="tag">${style.label}</span></div>
+						<div class="sample" data-font-sample="${index}" style="font-family:${style.family};font-weight:${style.weight};color:${style.color}">Aa Bb 123</div>
+						<div class="weights"><span class="weight">Regular 400</span><span class="weight">Semibold 600</span><span class="weight">Bold 700</span></div>
+					</article>`).join("")}
+			</section>`;
+		document.body.appendChild(showcase);
+
+		showcase.querySelector("#font-preview").addEventListener("input", event => {
+			const text = event.target.value || "Aa Bb 123";
+			showcase.querySelectorAll(".sample").forEach(sample => { sample.textContent = text; });
+		});
+	}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", buildShowcase, { once: true });
+	} else {
+		buildShowcase();
+	}
+})();

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediFind - Medicine Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h2 class="logo">✚ Medi<span>Find</span></h2>
+    <button class="register-btn" onclick="showPage('register')">
+        Register
+    </button>
+</header>
+
+<!-- PAGE 1: WELCOME -->
+<section id="home" class="page active">
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Find Medicines <br><span>Near You!</span></h1>
+            <p>
+                Search medicines, check availability, compare prices,
+                and discover nearby medical shops with MediFind.
+            </p>
+            <button onclick="showPage('register')" class="primary-btn">
+                Get Started →
+            </button>
+            <button onclick="showPage('login')" class="secondary-btn">
+                Login
+            </button>
+        </div>
+
+        <div class="hero-icon">💊</div>
+    </div>
+</section>
+
+<!-- PAGE 2: REGISTER -->
+<section id="register" class="page">
+    <div class="form-card">
+        <button class="back-btn" onclick="showPage('home')">← Back</button>
+        <h1>Create Account</h1>
+        <p>Join the MediFind community</p>
+
+        <form id="registerForm">
+            <input id="regName" type="text"
+                   placeholder="Full Name" required>
+
+            <input id="regEmail" type="email"
+                   placeholder="Email Address" required>
+
+            <input id="regPhone" type="tel"
+                   placeholder="Phone Number" required>
+
+            <select id="regRole" required>
+                <option value="user">Medicine Seeker / User</option>
+                <option value="owner">Medical Shop Owner</option>
+            </select>
+
+            <input id="regPassword" type="password"
+                   placeholder="Create Password"
+                   minlength="6" required>
+
+            <button class="primary-btn full-btn" type="submit">
+                Register Now →
+            </button>
+        </form>
+
+        <p>Already have an account?
+            <a href="#" onclick="showPage('login'); return false;">Login</a>
+        </p>
+    </div>
+</section>
+
+<!-- PAGE 2B: LOGIN -->
+<section id="login" class="page">
+    <h1 class="section-title">Welcome Back to <span>MediFind</span></h1>
+    <p class="section-subtitle">Choose your account type</p>
+
+    <div class="login-container">
+
+        <div class="login-card">
+            <div class="card-icon">👤</div>
+            <h2>User Login</h2>
+            <p>Search medicines at nearby pharmacies.</p>
+
+            <form id="userLogin">
+                <input type="text" placeholder="Email or Phone" required>
+                <input type="password" placeholder="Password" required>
+                <button class="primary-btn full-btn" type="submit">
+                    Login as User
+                </button>
+            </form>
+        </div>
+
+        <div class="login-card">
+            <div class="card-icon">🏥</div>
+            <h2>Medical Shop Owner</h2>
+            <p>Manage your shop and medicine inventory.</p>
+
+            <form id="ownerLogin">
+                <input type="text" placeholder="Shop Email or Phone" required>
+                <input type="password" placeholder="Password" required>
+                <button class="dark-btn full-btn" type="submit">
+                    Login as Shop Owner
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <p class="center">
+        New user?
+        <a href="#" onclick="showPage('register'); return false;">Register here</a>
+    </p>
+    <button class="back-btn" onclick="showPage('home')">← Home</button>
+</section>
+
+<!-- PAGE 3: MEDICINE SEARCH -->
+<section id="search" class="page search-page">
+
+    <div class="search-heading">
+        <h1>Find Your <span>Medicine</span></h1>
+        <p>Search and discover nearby medical shops.</p>
+    </div>
+
+    <div class="search-box">
+        <input id="medicineInput" type="search"
+               placeholder="Enter medicine name...">
+
+        <button class="primary-btn" onclick="searchMedicine()">
+            Search
+        </button>
+    </div>
+
+    <button class="location-btn" onclick="getLocation()">
+        📍 Use My Current Location
+    </button>
+
+    <p id="locationStatus">Location not shared</p>
+
+    <h2 id="resultsTitle">Nearby Medical Shops</h2>
+    <div id="results" class="results-container"></div>
+
+    <p class="notice">
+        Demo listings only. Confirm stock, price, and medicine details
+        directly with the pharmacy before visiting.
+    </p>
+
+    <button class="back-btn" onclick="showPage('home')">← Home</button>
+</section>
+
+<div id="message" class="message"></div>
+
+<footer>
+    <p>✚ MediFind | Find Nearby. Feel Informed.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
